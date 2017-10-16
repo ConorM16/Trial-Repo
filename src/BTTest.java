@@ -117,12 +117,11 @@ public class BTTest {
 		bt.gca(0,7);
 	}
 	
-	@Test 
-	public void testInvalidInput(){
-		BinaryTree bt = new BinaryTree();
-		
-		assertEquals("Character is not an integer.",0, bt.isInt("a"));
-		assertEquals("1 is an integer.",1, bt.isInt("1"));
-		//assertEquals("Character '1' is an integer.",1, bt.isInt(1));
-	}
+//	@Test 
+//	public void testInvalidInput(){
+//		BinaryTree bt = new BinaryTree();
+//		
+//		assertEquals("Character is not an integer.",0, bt.isInt("a"));
+//		assertEquals("1 is an integer.",1, bt.isInt("1"));
+//	}
 }
