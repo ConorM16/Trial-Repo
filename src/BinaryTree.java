@@ -16,7 +16,7 @@ public class BinaryTree {
 	            left = null;
 	            right = null;
 	            parent = null;
-	            nodes = new Node[2];
+	            nodes = new Node[2];	//left node = nodes[0], right = nodes[1]
 	        }
 	    }
 	    
@@ -68,6 +68,54 @@ public class BinaryTree {
 	    	}
 	    }
 	    
+	    public void requestLink(int n, int p){
+	    	if(n != p)
+	    	{
+		    	if(contains(n) && contains(p))
+		    	{
+		    		if(depth(n) < depth(p))
+		    		{
+		    			if(n < p)
+		    			{
+		    				setRequest(findNode(root,n),findNode(root,p));
+		    			}
+		    			else
+		    				setRequest(findNode(root,p),findNode(root,n));
+		    		}
+		    	}
+	    	}
+	    	Node node1 = findNode(root,n);
+	    	Node node2 = findNode(root,n);
+	    }
+	    
+	    public void setRequest(Node x, Node y){
+//	    	if(x.N < y.N)
+//	    	{
+	    		if(x.nodes[1] == null)
+	    		{
+	    			x.nodes[1] = y;
+	    		}
+	    		else if(x.nodes[0] == null)
+	    		{
+	    			x.nodes[0] = y;
+	    		}
+	    		else
+	    			printErr(x);
+//	    	}
+//	    	else 
+//	    	{
+//	    		if(x.nodes[1] == null)
+//	    		{
+//	    			x.nodes[1] = y;
+//	    		}
+//	    		else if(x.nodes[0] == null)
+//	    		{
+//	    			x.nodes[0] = y;
+//	    		}
+//	    		else
+//	    			printErr(x);
+//	    	}
+	    }
 	    /*
 	     * checks links for node with value n
 	     */
@@ -259,6 +307,9 @@ public class BinaryTree {
 	    	else System.out.println("Zero has no ancestors.");
 	    }
 	    
+	    private void printErr(Node x){
+	    	System.out.println("Request cannot be completed, Node " + x.N + " has full links");
+	    }
 	    
 	    
 //	    public int isInt(String string)
