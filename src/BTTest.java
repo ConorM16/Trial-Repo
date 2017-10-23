@@ -117,6 +117,15 @@ public class BTTest {
 		bt.gca(0,7);
 	}
 	
+	@Test
+	public void testLinks(){
+		BinaryTree bt = new BinaryTree();
+
+		bt.putNode(2);
+		bt.putNode(1);
+		bt.putNode(3);
+	}
+	
 //	@Test 
 //	public void testInvalidInput(){
 //		BinaryTree bt = new BinaryTree();

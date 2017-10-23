@@ -9,23 +9,32 @@ public class BinaryTree {
 	    private class Node {
 	        private Node left,right,parent;  // left and right subtrees
 	        private int N;             // number of nodes in subtree
+	        public Node [] nodes;		//Nodes that initial node points to
 
 	        public Node(int N) {
 	            this.N = N;
 	            left = null;
 	            right = null;
 	            parent = null;
+	            nodes = new Node[2];
 	        }
 	    }
 	    
+	    /*
+	     * takes an n, if its not 0, adds it to DAG
+	     */
 	    public void putNode(int n){
 	    	if(!zero(n,"put"))
 	    	{
 		    	root = put(root, n);
 		    	setParents(root, root);
+		    	setLinks(findNode(root,n));
 	    	}
 	    }
 	    
+	    /*
+	     * places node in graph
+	     */
 	    private Node put(Node x, int n) {
 	        if (x == null) return new Node(n);
 	        if      (n < x.N) x.left  = put(x.left, n);
@@ -34,11 +43,44 @@ public class BinaryTree {
 	        return x;
 	    }
 	    
+	    private Node findNode(Node x,int n){
+	    	if (x == null) return null;
+	        if      (n < x.N) return findNode(x.left, n);
+	        else if (n > x.N) return findNode(x.right, n);
+	        else              return x;
+	       // return x;
+	    }
+	    
+	    private void setLinks(Node x){
+	    	if(x != root)
+	    	{
+	    		if(x.N < x.parent.N)
+	    		{
+	    			x.parent.nodes[0] = x; //left link of parent node points to x
+	    		}
+	    		else
+	    		{
+	    			x.parent.nodes[1] = x;
+	    		}
+	    	}
+	    }
+	    
+	    /*
+	     * checks links for node with value n
+	     */
+	    public int [] checkLinks(int n){
+	    	Node x = findNode(root,n);
+	    	int [] linkVals = new int[2];
+	    	return linkVals;
+	    }
 	    public boolean contains(int n)
 	    {
 	    	return containsNode(root, n);
 	    }
-	    
+
+	    /*
+	     * checks graph for node
+	     */
 	    public boolean containsNode(Node x,int n)
 	    {
 	    	if(x == null) return false;
@@ -48,6 +90,9 @@ public class BinaryTree {
 	    	else return true;
 	    }
 	    
+	    /*
+	     * sets parents if node x
+	     */
 	    private void setParents(Node x, Node prev)
 	    {
 	    	if(x.left != null) setParents(x.left, x);
@@ -58,6 +103,9 @@ public class BinaryTree {
 	    	}
 	    }
 	    
+	    /*
+	     * finds height of node n
+	     */
 	    public int depth(int n)
 	    {
 	    	if(!zero(n,"depth"))
@@ -86,6 +134,9 @@ public class BinaryTree {
 	        }
 	    }
 	    
+	    /*
+	     * creates array of all of node n's ancestors
+	     */
 	    public int [] ancestors(int n){
 	    	if(!zero(n,"ancestor"))
 	    	{
@@ -118,6 +169,9 @@ public class BinaryTree {
 	        //return ancestors;
 	    }
 	    
+	    /*
+	     * greatest common ancestor of a and b
+	     */
 	    public int gca(int a, int b)
 	    {
 	    	if((!zero(a,"ancestor")) && !zero(b,"ancestor"))
@@ -165,6 +219,9 @@ public class BinaryTree {
 	    	return gca;
 	    }
 	    
+	    /*
+	     * checks if n = 0 and what type of request is made
+	     */
 	    private boolean zero(int n, String type){
 	    	if(n == 0)
 	    	{
@@ -194,9 +251,11 @@ public class BinaryTree {
 	    	else System.out.println("Zero has no ancestors.");
 	    }
 	    
+	    
+	    
 //	    public int isInt(String string)
 //	    {
-//	        try
+//	        try 
 //	        {
 //	            return Integer.parseInt(string);
 //	        } catch (NumberFormatException ex)
