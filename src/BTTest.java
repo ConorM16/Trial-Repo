@@ -124,6 +124,16 @@ public class BTTest {
 		bt.putNode(2);
 		bt.putNode(1);
 		bt.putNode(3);
+		
+		bt.putNode(6);
+		bt.putNode(7);
+		bt.putNode(5);
+		
+		int [] expected = {1,3};
+		int [] expected2 = {5,7};
+		
+		assertArrayEquals("Expected links:",expected,bt.checkLinks(2));
+		assertArrayEquals("Expected links:",expected2,bt.checkLinks(6));
 	}
 	
 //	@Test 

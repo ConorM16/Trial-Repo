@@ -51,6 +51,9 @@ public class BinaryTree {
 	       // return x;
 	    }
 	    
+	    /*
+	     * sets link of parent node equivalent to value of N in node x
+	     */
 	    private void setLinks(Node x){
 	    	if(x != root)
 	    	{
@@ -71,7 +74,11 @@ public class BinaryTree {
 	    public int [] checkLinks(int n){
 	    	Node x = findNode(root,n);
 	    	int [] linkVals = new int[2];
-	    	d
+	    	int i;
+	    	for(i = 0; i < x.nodes.length; i++)
+	    	{
+	    		linkVals[i] = x.nodes[i].N;
+	    	}
 	    	return linkVals;
 	    }
 	    public boolean contains(int n)
