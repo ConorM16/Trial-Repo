@@ -71,6 +71,7 @@ public class BinaryTree {
 	    public int [] checkLinks(int n){
 	    	Node x = findNode(root,n);
 	    	int [] linkVals = new int[2];
+	    	d
 	    	return linkVals;
 	    }
 	    public boolean contains(int n)
