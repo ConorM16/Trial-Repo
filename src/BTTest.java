@@ -115,6 +115,7 @@ public class BTTest {
 		bt.depth(0);
 		bt.ancestors(0);
 		bt.gca(0,7);
+		bt.requestLink(0, 1);
 	}
 	
 	@Test
@@ -131,6 +132,7 @@ public class BTTest {
 		
 		int [] expected = {1,3};
 		int [] expected2 = {5,7};
+		int [] expected3 = {(Integer) null,(Integer) null};
 		
 		assertArrayEquals("Expected links:",expected,bt.checkLinks(2));
 		assertArrayEquals("Expected links:",expected2,bt.checkLinks(6));
@@ -147,11 +149,28 @@ public class BTTest {
 		//both present
 		assertEquals("Both nodes are present",3,bt.returnCheck(1, 3));
 		//left int present
-		assertEquals("Both nodes are present",2,bt.returnCheck(1, 6));
+		assertEquals("Left node present",2,bt.returnCheck(1, 6));
 		//right int present
-		assertEquals("Both nodes are present",1,bt.returnCheck(6, 3));
+		assertEquals("Right node present",1,bt.returnCheck(6, 3));
 		//neither present
-		assertEquals("Both nodes are present",0,bt.returnCheck(5, 4));
+		assertEquals("Neither nodes are present",0,bt.returnCheck(5, 4));
+	}
+	
+	@Test
+	public void testRequestLink(){
+		BinaryTree bt = new BinaryTree();
+		
+		bt.putNode(2);
+		bt.putNode(1);
+		bt.putNode(3);
+		bt.putNode(4);
+		
+		bt.requestLink(3, 3);
+		//bt.requestLink(1, 4);
+		//int [] expected = {(Integer) null, 4};
+		//request link for two existing nodes
+		//assertArrayEquals("Expected links:",expected,bt.checkLinks(1));
+		
 	}
 	
 //	@Test 

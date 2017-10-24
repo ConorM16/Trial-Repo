@@ -43,6 +43,12 @@ public class BinaryTree {
 	        return x;
 	    }
 	    
+	    /**
+	     * 
+	     * @param x = root 
+	     * @param n = value of node we want to find
+	     * @return node with value n if found
+	     */
 	    private Node findNode(Node x,int n){
 	    	if (x == null) return null;
 	        if      (n < x.N) return findNode(x.left, n);
@@ -69,24 +75,27 @@ public class BinaryTree {
 	    }
 	    
 	    public void requestLink(int n, int p){
-	    	if(n != p)
+	    	if(!zero(n,"link") && !zero(p,"link"))
 	    	{
-	    		int check = check(n,p);
-		    	if(check == 3)
+		    	if(n != p)
 		    	{
-		    		bothPresent(n,p);
+		    		int check = check(n,p);
+			    	if(check == 3)
+			    	{
+			    		bothPresent(n,p);
+			    	}
+			    	else if(check == 2)
+			    	{
+			    		onePresent(n,p);		//n present, p not
+			    	}
+			    	else if(check == 1)
+			    	{
+			    		onePresent(p,n);		//p present
+			    	}
+			    	else nonePresent(n,p);		//neither present
 		    	}
-		    	else if(check == 2)
-		    	{
-		    		onePresent(n,p);		//n present, p not
-		    	}
-		    	else if(check == 1)
-		    	{
-		    		onePresent(p,n);		//p present
-		    	}
-		    	else nonePresent(n,p);		//neither present
+		    	else System.out.println("Two nodes cannot be the same.");
 	    	}
-	    	else System.out.println("two nodes cannot be the same");
 	    }
 	    
 	    /**
@@ -159,21 +168,7 @@ public class BinaryTree {
 	     * 
 	     * @param x
 	     * @param y
-	     * @return node with smallest N
-	     */
-	    private Node smallestVal(int x, int y){
-	    	if(x<y)
-	    	{
-	    		return findNode(root,x);
-	    	}
-	    	else return findNode(root,y);
-	    }
-	    
-	    /**
-	     * 
-	     * @param x
-	     * @param y
-	     * @return int with smallest depth in ADG
+	     * @return node with smallest depth in ADG
 	     */
 	    private int smallestDepth(int x, int y){
 	    	if(depth(x)<depth(y))
@@ -388,7 +383,11 @@ public class BinaryTree {
 	    		{
 	    			zeroPrint("depth");
 	    		}
-	    		else zeroPrint("ancestor");
+	    		else if(type.equals("ancestor"))
+	    		{
+	    			zeroPrint("ancestor");
+	    		}
+	    		else zeroPrint("link");
 	    		return true;
 	    	}
 	    	else return false;
@@ -403,7 +402,12 @@ public class BinaryTree {
 	    	{
 	    		System.out.println("Zero is not present.");
 	    	}
-	    	else System.out.println("Zero has no ancestors.");
+	    	else if(type.equals("ancestor"))
+	    	{
+	    		System.out.println("Zero has no ancestors.");
+	    	}
+	    	else System.out.println("Cannot request link with Zero.");
+
 	    }
 	    
 	    private void printErr(Node x){
