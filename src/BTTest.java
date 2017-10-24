@@ -136,6 +136,24 @@ public class BTTest {
 		assertArrayEquals("Expected links:",expected2,bt.checkLinks(6));
 	}
 	
+	@Test
+	public void testCheck(){
+		BinaryTree bt = new BinaryTree();
+		
+		bt.putNode(2);
+		bt.putNode(1);
+		bt.putNode(3);
+		
+		//both present
+		assertEquals("Both nodes are present",3,bt.returnCheck(1, 3));
+		//left int present
+		assertEquals("Both nodes are present",2,bt.returnCheck(1, 6));
+		//right int present
+		assertEquals("Both nodes are present",1,bt.returnCheck(6, 3));
+		//neither present
+		assertEquals("Both nodes are present",0,bt.returnCheck(5, 4));
+	}
+	
 //	@Test 
 //	public void testInvalidInput(){
 //		BinaryTree bt = new BinaryTree();

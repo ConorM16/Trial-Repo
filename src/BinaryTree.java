@@ -76,10 +76,17 @@ public class BinaryTree {
 		    	{
 		    		bothPresent(n,p);
 		    	}
-		    	//else if(check == 1)
+		    	else if(check == 2)
+		    	{
+		    		onePresent(n,p);		//n present, p not
+		    	}
+		    	else if(check == 1)
+		    	{
+		    		onePresent(p,n);		//p present
+		    	}
+		    	else nonePresent(n,p);		//neither present
 	    	}
-//	    	Node node1 = findNode(root,n);
-//	    	Node node2 = findNode(root,n);
+	    	else System.out.println("two nodes cannot be the same");
 	    }
 	    
 	    /**
@@ -98,7 +105,7 @@ public class BinaryTree {
 	    /**
 	     * 
 	     * @param x = node that's present
-	     * @param y = node thats not present
+	     * @param y = node thats not present, create node y
 	     */
 	    private void onePresent(int x,int y){
 	    	putNode(y);
@@ -107,6 +114,23 @@ public class BinaryTree {
     			setRequest(findNode(root,x),findNode(root,y));
     		}
     		else setRequest(findNode(root,y),findNode(root,x));
+	    }
+	    
+	    /**
+	     * Neither of the nodes are present, create both nodes
+	     */
+	    private void nonePresent(int x,int y){
+	    	putNode(x);
+	    	putNode(y);
+	    	if(smallestDepth(x,y) == x)
+    		{
+    			setRequest(findNode(root,x),findNode(root,y));
+    		}
+    		else setRequest(findNode(root,y),findNode(root,x));
+	    }
+	    
+	    public int returnCheck(int n, int p){
+	    	return check(n,p);
 	    }
 	    
 	    /**
