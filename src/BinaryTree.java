@@ -71,6 +71,7 @@ public class BinaryTree {
 	    public void requestLink(int n, int p){
 	    	if(n != p)
 	    	{
+	    		int check = check(n,p);
 		    	if(contains(n) && contains(p))
 		    	{
 		    		if(depth(n) < depth(p))
@@ -83,11 +84,51 @@ public class BinaryTree {
 		    				setRequest(findNode(root,p),findNode(root,n));
 		    		}
 		    	}
+		    	else if()
 	    	}
 	    	Node node1 = findNode(root,n);
 	    	Node node2 = findNode(root,n);
 	    }
 	    
+	    /**
+	     * 
+	     * @param n
+	     * @param p
+	     * @return int value depending on how many nodes are present
+	     */
+	    private int check(int n, int p){
+	    	if(contains(n) && contains(p))
+	    	{
+	    		return 3;
+	    	}
+	    	else if(contains(n) && !contains(p))
+	    	{
+	    		return 2;
+	    	}
+	    	else if(!contains(n) && contains(p))
+	    	{
+	    		return 1;
+	    	}
+	    	else return 0;
+	    }
+	    
+	    /**
+	     * 
+	     * @param x
+	     * @param y
+	     * @return node with smallest N
+	     */
+	    private Node smallestVal(int x, int y)
+	    {
+	    	if(x<y)
+	    	{
+	    		return findNode(root,x);
+	    	}
+	    	else return findNode(y);
+	    }
+	    /*
+	     * x.N is smaller than y.N
+	     */
 	    public void setRequest(Node x, Node y){
 //	    	if(x.N < y.N)
 //	    	{
