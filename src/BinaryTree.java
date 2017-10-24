@@ -16,7 +16,7 @@ public class BinaryTree {
 	            left = null;
 	            right = null;
 	            parent = null;
-	            nodes = new Node[2];	//left node = nodes[0], right = nodes[1]
+	            nodes = new Node[2];	//left node(smaller than Node) = nodes[0], right link(bigger than Node) = nodes[1]
 	        }
 	    }
 	    
@@ -72,22 +72,41 @@ public class BinaryTree {
 	    	if(n != p)
 	    	{
 	    		int check = check(n,p);
-		    	if(contains(n) && contains(p))
+		    	if(check == 3)
 		    	{
-		    		if(depth(n) < depth(p))
-		    		{
-		    			if(n < p)
-		    			{
-		    				setRequest(findNode(root,n),findNode(root,p));
-		    			}
-		    			else
-		    				setRequest(findNode(root,p),findNode(root,n));
-		    		}
+		    		bothPresent(n,p);
 		    	}
-		    	else if()
+		    	//else if(check == 1)
 	    	}
-	    	Node node1 = findNode(root,n);
-	    	Node node2 = findNode(root,n);
+//	    	Node node1 = findNode(root,n);
+//	    	Node node2 = findNode(root,n);
+	    }
+	    
+	    /**
+	     * 
+	     * @param n present node in tree
+	     * @param p present node in tree
+	     */
+	    private void bothPresent(int n, int p){
+	    	if(smallestDepth(n,p) == n)
+    		{
+    			setRequest(findNode(root,n),findNode(root,p));
+    		}
+    		else setRequest(findNode(root,p),findNode(root,n));
+	    }
+	    
+	    /**
+	     * 
+	     * @param x = node that's present
+	     * @param y = node thats not present
+	     */
+	    private void onePresent(int x,int y){
+	    	putNode(y);
+	    	if(smallestDepth(x,y) == x)
+    		{
+    			setRequest(findNode(root,x),findNode(root,y));
+    		}
+    		else setRequest(findNode(root,y),findNode(root,x));
 	    }
 	    
 	    /**
@@ -118,20 +137,35 @@ public class BinaryTree {
 	     * @param y
 	     * @return node with smallest N
 	     */
-	    private Node smallestVal(int x, int y)
-	    {
+	    private Node smallestVal(int x, int y){
 	    	if(x<y)
 	    	{
 	    		return findNode(root,x);
 	    	}
-	    	else return findNode(y);
+	    	else return findNode(root,y);
 	    }
-	    /*
-	     * x.N is smaller than y.N
+	    
+	    /**
+	     * 
+	     * @param x
+	     * @param y
+	     * @return int with smallest depth in ADG
+	     */
+	    private int smallestDepth(int x, int y){
+	    	if(depth(x)<depth(y))
+	    	{
+	    		return x;
+	    	}
+	    	else return y;
+	    }
+	    /**
+	     * 
+	     * @param x
+	     * @param y
 	     */
 	    public void setRequest(Node x, Node y){
-//	    	if(x.N < y.N)
-//	    	{
+	    	if(x.N < y.N)
+	    	{
 	    		if(x.nodes[1] == null)
 	    		{
 	    			x.nodes[1] = y;
@@ -142,20 +176,20 @@ public class BinaryTree {
 	    		}
 	    		else
 	    			printErr(x);
-//	    	}
-//	    	else 
-//	    	{
-//	    		if(x.nodes[1] == null)
-//	    		{
-//	    			x.nodes[1] = y;
-//	    		}
-//	    		else if(x.nodes[0] == null)
-//	    		{
-//	    			x.nodes[0] = y;
-//	    		}
-//	    		else
-//	    			printErr(x);
-//	    	}
+	    	}
+	    	else 
+	    	{
+	    		if(x.nodes[0] == null)
+	    		{
+	    			x.nodes[0] = y;
+	    		}
+	    		else if(x.nodes[1] == null)
+	    		{
+	    			x.nodes[1] = y;
+	    		}
+	    		else
+	    			printErr(x);
+	    	}
 	    }
 	    /*
 	     * checks links for node with value n
