@@ -8,8 +8,15 @@ public class DAGTest {
 	public void testAdd() {
 		DAG dag = new DAG();
 		assertTrue("Node is present", dag.addNode('A'));
-		
-		assertEquals("Node at first index:",)
+	}
+	
+	@Test 
+	public void testPrint(){
+		DAG dag = new DAG();
+		dag.addNode('A');
+		dag.addNode('B');
+		dag.addNode('C');
+		dag.printNodes();
 	}
 
 }

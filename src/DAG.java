@@ -16,6 +16,11 @@ public class DAG {
         }
     }
 	
+	/**
+	 * 
+	 * @param N char value of Node to be added
+	 * @return true if Node is added, false otherwise
+	 */
 	public boolean addNode(char N){
 		char capital = Character.toUpperCase(N); //converts N to uppercase letter
 		Node newNode = new Node(capital);
@@ -33,5 +38,16 @@ public class DAG {
 			System.out.println("Node already present");
 			return added;
 		}
+	}
+	
+	public void printNodes(){
+		Node listNodes[] = new Node[nodes.size()];
+		listNodes = nodes.toArray(listNodes);
+		int size = listNodes.length;
+		for(int i = 0; i < size-1; i++)
+		{
+			System.out.print(listNodes[i].N + ", ");
+		}
+		System.out.print(listNodes[size-1].N);
 	}
 }
