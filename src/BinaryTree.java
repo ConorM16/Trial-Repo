@@ -1,5 +1,3 @@
- //import BinaryTree.Node;
-
 public class BinaryTree {
 	 public Node root;             // root of BST
 //	 private boolean isEmpty = true;
@@ -9,32 +7,23 @@ public class BinaryTree {
 	    private class Node {
 	        private Node left,right,parent;  // left and right subtrees
 	        private int N;             // number of nodes in subtree
-	        public Node [] nodes;		//Nodes that initial node points to
 
 	        public Node(int N) {
 	            this.N = N;
 	            left = null;
 	            right = null;
 	            parent = null;
-	            nodes = new Node[2];	//left node(smaller than Node) = nodes[0], right link(bigger than Node) = nodes[1]
 	        }
 	    }
 	    
-	    /*
-	     * takes an n, if its not 0, adds it to DAG
-	     */
 	    public void putNode(int n){
 	    	if(!zero(n,"put"))
 	    	{
 		    	root = put(root, n);
 		    	setParents(root, root);
-		    	setLinks(findNode(root,n));
 	    	}
 	    }
 	    
-	    /*
-	     * places node in graph
-	     */
 	    private Node put(Node x, int n) {
 	        if (x == null) return new Node(n);
 	        if      (n < x.N) x.left  = put(x.left, n);
@@ -43,194 +32,11 @@ public class BinaryTree {
 	        return x;
 	    }
 	    
-	    /**
-	     * 
-	     * @param x = root 
-	     * @param n = value of node we want to find
-	     * @return node with value n if found
-	     */
-	    private Node findNode(Node x,int n){
-	    	if (x == null) return null;
-	        if      (n < x.N) return findNode(x.left, n);
-	        else if (n > x.N) return findNode(x.right, n);
-	        else              return x;
-	       // return x;
-	    }
-	    
-	    /*
-	     * sets link of parent node equivalent to value of N in node x
-	     */
-	    private void setLinks(Node x){
-	    	if(x != root)
-	    	{
-	    		if(x.N < x.parent.N)
-	    		{
-	    			x.parent.nodes[0] = x; //left link of parent node points to x
-	    		}
-	    		else
-	    		{
-	    			x.parent.nodes[1] = x;
-	    		}
-	    	}
-	    }
-	    
-	    public void requestLink(int n, int p){
-	    	if(!zero(n,"link") && !zero(p,"link"))
-	    	{
-		    	if(n != p)
-		    	{
-		    		int check = check(n,p);
-			    	if(check == 3)
-			    	{
-			    		bothPresent(n,p);
-			    	}
-			    	else if(check == 2)
-			    	{
-			    		onePresent(n,p);		//n present, p not
-			    	}
-			    	else if(check == 1)
-			    	{
-			    		onePresent(p,n);		//p present
-			    	}
-			    	else nonePresent(n,p);		//neither present
-		    	}
-		    	else System.out.println("Two nodes cannot be the same.");
-	    	}
-	    }
-	    
-	    /**
-	     * 
-	     * @param n present node in tree
-	     * @param p present node in tree
-	     */
-	    private void bothPresent(int n, int p){
-	    	if(smallestDepth(n,p) == n)
-    		{
-    			setRequest(findNode(root,n),findNode(root,p));
-    		}
-    		else setRequest(findNode(root,p),findNode(root,n));
-	    }
-	    
-	    /**
-	     * 
-	     * @param x = node that's present
-	     * @param y = node thats not present, create node y
-	     */
-	    private void onePresent(int x,int y){
-	    	putNode(y);
-	    	if(smallestDepth(x,y) == x)
-    		{
-    			setRequest(findNode(root,x),findNode(root,y));
-    		}
-    		else setRequest(findNode(root,y),findNode(root,x));
-	    }
-	    
-	    /**
-	     * Neither of the nodes are present, create both nodes
-	     */
-	    private void nonePresent(int x,int y){
-	    	putNode(x);
-	    	putNode(y);
-	    	if(smallestDepth(x,y) == x)
-    		{
-    			setRequest(findNode(root,x),findNode(root,y));
-    		}
-    		else setRequest(findNode(root,y),findNode(root,x));
-	    }
-	    
-	    public int returnCheck(int n, int p){
-	    	return check(n,p);
-	    }
-	    
-	    /**
-	     * 
-	     * @param n
-	     * @param p
-	     * @return int value depending on how many nodes are present
-	     */
-	    private int check(int n, int p){
-	    	if(contains(n) && contains(p))
-	    	{
-	    		return 3;
-	    	}
-	    	else if(contains(n) && !contains(p))
-	    	{
-	    		return 2;
-	    	}
-	    	else if(!contains(n) && contains(p))
-	    	{
-	    		return 1;
-	    	}
-	    	else return 0;
-	    }
-	    
-	    /**
-	     * 
-	     * @param x
-	     * @param y
-	     * @return node with smallest depth in ADG
-	     */
-	    private int smallestDepth(int x, int y){
-	    	if(depth(x)<depth(y))
-	    	{
-	    		return x;
-	    	}
-	    	else return y;
-	    }
-	    /**
-	     * 
-	     * @param x
-	     * @param y
-	     */
-	    public void setRequest(Node x, Node y){
-	    	if(x.N < y.N)
-	    	{
-	    		if(x.nodes[1] == null)
-	    		{
-	    			x.nodes[1] = y;
-	    		}
-	    		else if(x.nodes[0] == null)
-	    		{
-	    			x.nodes[0] = y;
-	    		}
-	    		else
-	    			printErr(x);
-	    	}
-	    	else 
-	    	{
-	    		if(x.nodes[0] == null)
-	    		{
-	    			x.nodes[0] = y;
-	    		}
-	    		else if(x.nodes[1] == null)
-	    		{
-	    			x.nodes[1] = y;
-	    		}
-	    		else
-	    			printErr(x);
-	    	}
-	    }
-	    /*
-	     * checks links for node with value n
-	     */
-	    public int [] checkLinks(int n){
-	    	Node x = findNode(root,n);
-	    	int [] linkVals = new int[2];
-	    	int i;
-	    	for(i = 0; i < x.nodes.length; i++)
-	    	{
-	    		linkVals[i] = x.nodes[i].N;
-	    	}
-	    	return linkVals;
-	    }
 	    public boolean contains(int n)
 	    {
 	    	return containsNode(root, n);
 	    }
-
-	    /*
-	     * checks graph for node
-	     */
+	    
 	    public boolean containsNode(Node x,int n)
 	    {
 	    	if(x == null) return false;
@@ -240,9 +46,6 @@ public class BinaryTree {
 	    	else return true;
 	    }
 	    
-	    /*
-	     * sets parents if node x
-	     */
 	    private void setParents(Node x, Node prev)
 	    {
 	    	if(x.left != null) setParents(x.left, x);
@@ -253,9 +56,6 @@ public class BinaryTree {
 	    	}
 	    }
 	    
-	    /*
-	     * finds height of node n
-	     */
 	    public int depth(int n)
 	    {
 	    	if(!zero(n,"depth"))
@@ -284,9 +84,6 @@ public class BinaryTree {
 	        }
 	    }
 	    
-	    /*
-	     * creates array of all of node n's ancestors
-	     */
 	    public int [] ancestors(int n){
 	    	if(!zero(n,"ancestor"))
 	    	{
@@ -319,9 +116,6 @@ public class BinaryTree {
 	        //return ancestors;
 	    }
 	    
-	    /*
-	     * greatest common ancestor of a and b
-	     */
 	    public int gca(int a, int b)
 	    {
 	    	if((!zero(a,"ancestor")) && !zero(b,"ancestor"))
@@ -369,9 +163,6 @@ public class BinaryTree {
 	    	return gca;
 	    }
 	    
-	    /*
-	     * checks if n = 0 and what type of request is made
-	     */
 	    private boolean zero(int n, String type){
 	    	if(n == 0)
 	    	{
@@ -383,11 +174,7 @@ public class BinaryTree {
 	    		{
 	    			zeroPrint("depth");
 	    		}
-	    		else if(type.equals("ancestor"))
-	    		{
-	    			zeroPrint("ancestor");
-	    		}
-	    		else zeroPrint("link");
+	    		else zeroPrint("ancestor");
 	    		return true;
 	    	}
 	    	else return false;
@@ -402,37 +189,6 @@ public class BinaryTree {
 	    	{
 	    		System.out.println("Zero is not present.");
 	    	}
-	    	else if(type.equals("ancestor"))
-	    	{
-	    		System.out.println("Zero has no ancestors.");
-	    	}
-	    	else System.out.println("Cannot request link with Zero.");
-
+	    	else System.out.println("Zero has no ancestors.");
 	    }
-	    
-	    private void printErr(Node x){
-	    	System.out.println("Request cannot be completed, Node " + x.N + " has full links");
-	    }
-	    
-	    
-//	    public int isInt(String string)
-//	    {
-//	        try 
-//	        {
-//	            return Integer.parseInt(string);
-//	        } catch (NumberFormatException ex)
-//	        {
-//	        	invalidInput();
-//	            return 0;
-//	        }
-//	    }
-//	    
-//	    private void invalidInput()
-//	    {
-//	    	System.out.println("Invalid input.");
-//	    }
-	    
-	   // private int parseInt()
-	    
-
 }
