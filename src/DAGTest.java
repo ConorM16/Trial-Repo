@@ -42,6 +42,17 @@ public class DAGTest {
 		dag.requestLink('A','B');
 	}
 	
+	@Test
+	public void testLinks(){
+		DAG dag = new DAG();
+		dag.requestLink('A','B');
+		dag.requestLink('B','C');
+		assertTrue("A is linked to B",dag.linked('A','B'));
+		assertFalse("B is not linked to a",dag.linked('B','A'));
+		assertTrue("B is linked to C",dag.linked('B','C'));
+		assertFalse("A is not linked to D",dag.linked('A','D'));
+	}
+	
 //	@Test
 //	public void testArrLists(){
 //		DAG dag = new DAG();

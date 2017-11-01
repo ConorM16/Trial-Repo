@@ -60,19 +60,23 @@ public class DAG {
 	 * @param ch2 - child node of link
 	 */
 	public void requestLink(char ch1, char ch2){
-		Node node1;
-		boolean added = false;
-		if(!containsNode(ch1))
+		if(!checkEqual(ch1,ch2))
 		{
-			node1 = new Node(ch1);
-			added = nodes.add(node1);
+			Node node1;
+			boolean added = false;
+			if(!containsNode(ch1))
+			{
+				node1 = new Node(ch1);
+				added = nodes.add(node1);
+			}
+			if(!containsNode(ch2))
+			{
+				node1 = new Node(ch2);
+				added = nodes.add(node1);
+			}
+			setLink(ch1,ch2);
 		}
-		if(!containsNode(ch2))
-		{
-			node1 = new Node(ch2);
-			added = nodes.add(node1);
-		}
-		setLink(ch1,ch2);
+		System.out.println("Characters cannot be the same.");
 	}
 	
 	/**
@@ -128,6 +132,7 @@ public class DAG {
 	 */
 	public boolean linked(char ch1, char ch2){
 		Node node = returnNode(ch1);
+		System.out.println("Node: " + node.N);
 		Node [] nodes = toArray(node.links);
 		Node testNode;
 		int size = nodes.length;
@@ -135,8 +140,10 @@ public class DAG {
 		for(i = 0; i < size; i++)
 		{
 			testNode = nodes[i];
-			if(equal(node,testNode.N))
+			System.out.println("Node: " + testNode.N);
+			if(equal(testNode,ch2))
 			{
+				System.out.println("Nodes linked");
 				return true;
 			}
 		}
@@ -151,6 +158,7 @@ public class DAG {
 	private boolean equal(Node n, char ch){
 		String strNode = Character.toString(n.N);
 		String strCh = Character.toString(ch);
+		System.out.println("N char: " + strNode + " Char: " + strCh);
 		return strNode.equals(strCh);
 	}
 	
