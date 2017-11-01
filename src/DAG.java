@@ -63,21 +63,26 @@ public class DAG {
 		if(!checkEqual(ch1,ch2))
 		{
 			Node node1;
-			boolean added = false;
+			boolean ch1Present = true;
+			boolean ch2Present = true;
+			boolean added;
 			if(!containsNode(ch1))
 			{
 				node1 = new Node(ch1);
 				added = nodes.add(node1);
+				ch1Present = false;
 			}
 			if(!containsNode(ch2))
 			{
 				node1 = new Node(ch2);
 				added = nodes.add(node1);
+				ch2Present = false;
 			}
 			setLink(ch1,ch2);
 			if(circuit())
 			{
 				removeLink(ch1,ch2);
+//				remove(ch1Present,ch2Present,ch1,ch2);
 			}
 		}
 		System.out.println("Characters cannot be the same.");
@@ -219,4 +224,64 @@ public class DAG {
 			System.out.println("Removed");
 		}
 	}
+//	
+//	private void remove(boolean x, boolean y,char ch1, char ch2){
+//		if(!x&&!y)
+//		{
+//			removeNode(ch1);
+//			removeNode(ch2);
+//		}
+//		else if(x && !y)
+//		{
+//			removeNode(ch2);
+//		}
+//		else removeNode(ch1);
+//	}
+//	/**
+//	 * 
+//	 * @param ch1 - char val of node to be removed
+//	 */
+//	private void removeNode(char ch1){
+//		Node node1 = returnNode(ch1);
+//		changeLinks(node1,ch1);
+//		nodes.remove(node1);
+//	}
+//	
+//	/**
+//	 * 
+//	 * @param n - node to be replaced
+//	 * @return
+//	 */
+//	private Node findReplace(Node n){
+//		Node [] array = toArray(nodes);
+//		Node [] array2;
+//		int i;
+//		for(i = 0; i < array.length; i++)
+//		{
+//			array2 = toArray(array[i].links);
+//			for(int j = 0; j < array2.length; j++)
+//			{
+//				if(equal(array2[j],n.N))
+//				{
+//					return array[i];
+//				}
+//			}
+//		}
+//		return null;
+//	}
+//	
+//	/**
+//	 * 
+//	 * @param replace - node to be replaced
+//	 * @param ch1	- char val of node
+//	 */
+//	private void changeLinks(Node replace,char ch1){
+//		Node node = findReplace(replace);
+//		Node [] replaceLinks = toArray(replace.links);
+//		int i;
+//		for(i = 0; i < replaceLinks.length; i++)
+//		{
+//			node.links.add(replaceLinks[i]);
+//		}
+//	}
 }
