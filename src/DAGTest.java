@@ -36,6 +36,12 @@ public class DAGTest {
 		assertFalse("Two characters are not the same.",dag.checkEqual('B','A'));
 	}
 	
+	@Test
+	public void testRequests(){
+		DAG dag = new DAG();
+		dag.requestLink('A','B');
+	}
+	
 //	@Test
 //	public void testArrLists(){
 //		DAG dag = new DAG();

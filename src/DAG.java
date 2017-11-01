@@ -37,7 +37,6 @@ public class DAG {
 	 */
 	public boolean addNode(char N){
 		char capital = Character.toUpperCase(N); //converts N to uppercase letter
-/*		Node newNode = new Node(capital);*/
 		boolean added = false;
 		if(!containsNode(capital))
 		{
@@ -61,18 +60,34 @@ public class DAG {
 	 * @param ch2 - child node of link
 	 */
 	public void requestLink(char ch1, char ch2){
-		Node node1 = new Node(ch1);
-		Node node2 = new Node(ch2);
+		Node node1;
 		boolean added = false;
 		if(!containsNode(ch1))
 		{
+			node1 = new Node(ch1);
 			added = nodes.add(node1);
 		}
 		if(!containsNode(ch2))
 		{
-			added = nodes.add(node2);
+			node1 = new Node(ch2);
+			added = nodes.add(node1);
 		}
-		setLink(nodes.indexOf(node1),nodes.indexOf(node2));
+		setLink(ch1,ch2);
+	}
+	
+	/**
+	 * 
+	 * @param ch1 - char val of parent node
+	 * @param ch2 - ch val of child node
+	 */
+	private void setLink(char ch1, char ch2){
+		Node node1 = returnNode(ch1);
+		Node node2 = returnNode(ch2);
+		if(!node1.links.contains(node2))
+		{
+			node1.links.add(node2);
+			System.out.println("Reached");
+		}
 	}
 	
 	/**
@@ -84,10 +99,20 @@ public class DAG {
 		Node array[] = toArray();
 		for(int i = 0; i < array.length; i++)
 		{
-			
+			if(equal(array[i],ch))
+			{
+				return array[i];
+			}
 		}
+		return null;
 	}
 	
+	/**
+	 * Used for test access only
+	 * @param ch1 
+	 * @param ch2
+	 * @return if ch1 == ch2
+	 */
 	public boolean checkEqual(char ch1, char ch2){
 		char upper1 = Character.toUpperCase(ch1);
 		char upper2 = Character.toUpperCase(ch2);
@@ -104,11 +129,6 @@ public class DAG {
 		String strNode = Character.toString(n.N);
 		String strCh = Character.toString(ch);
 		return strNode.equals(strCh);
-	}
-	
-	private void setLink(int i, int j){
-		Node node1 = nodes.get(i);
-		Node node2 = nodes.get(j);
 	}
 	
 	/**
@@ -131,6 +151,6 @@ public class DAG {
 		{
 			System.out.print(listNodes[i].N + ", ");
 		}
-		System.out.print(listNodes[size-1].N);
+		System.out.println(listNodes[size-1].N);
 	}
 }
