@@ -18,7 +18,7 @@ public class DAG {
 	 * @return true if character present, false otherwise
 	 */
 	public boolean containsNode(char ch){
-		Node array[] = toArray();
+		Node array[] = toArray(nodes);
 		int i = 0;
 		while(i < array.length)
 		{
@@ -96,7 +96,7 @@ public class DAG {
 	 * @return requested Node
 	 */
 	private Node returnNode(char ch){
-		Node array[] = toArray();
+		Node array[] = toArray(nodes);
 		for(int i = 0; i < array.length; i++)
 		{
 			if(equal(array[i],ch))
@@ -119,6 +119,29 @@ public class DAG {
 		Node node = new Node(ch1);
 		return equal(node,ch2);
 	}
+	
+	/**
+	 * 
+	 * @param ch1 - node1 with char val ch1
+	 * @param ch2 - node2 with char val ch1
+	 * @return if node1 is parent of node2
+	 */
+	public boolean linked(char ch1, char ch2){
+		Node node = returnNode(ch1);
+		Node [] nodes = toArray(node.links);
+		Node testNode;
+		int size = nodes.length;
+		int i;
+		for(i = 0; i < size; i++)
+		{
+			testNode = nodes[i];
+			if(equal(node,testNode.N))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	/**
 	 * 
 	 * @param n - node we want to compare ch to
@@ -135,9 +158,9 @@ public class DAG {
 	 * 
 	 * @return DAG array list as array of nodes
 	 */
-	private Node[] toArray(){
-		Node listNodes[] = new Node[nodes.size()];
-		listNodes = nodes.toArray(listNodes);
+	private Node[] toArray(ArrayList<Node> list){
+		Node listNodes[] = new Node[list.size()];
+		listNodes = list.toArray(listNodes);
 		return listNodes;
 	}
 	
@@ -145,7 +168,7 @@ public class DAG {
 	 * Prints all nodes
 	 */
 	public void printNodes(){
-		Node listNodes[] = toArray();
+		Node listNodes[] = toArray(nodes);
 		int size = listNodes.length;
 		for(int i = 0; i < size-1; i++)
 		{
