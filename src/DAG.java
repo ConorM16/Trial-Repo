@@ -63,6 +63,11 @@ public class DAG {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param ch1 - char val of parent node of requested link
+	 * @param ch2 - child node of link
+	 */
 	public void requestLink(char ch1, char ch2){
 		Node node1 = new Node(ch1);
 		Node node2 = new Node(ch2);
@@ -78,7 +83,14 @@ public class DAG {
 		setLink(nodes.indexOf(node1),nodes.indexOf(node2));
 	}
 	
-	
+	/**
+	 * 
+	 * @param ch - char of present Node we want
+	 * @return requested Node
+	 */
+	private Node returnNode(char ch){
+		
+	}
 	private void setLink(int i, int j){
 		Node node1 = nodes.get(i);
 		Node node2 = nodes.get(j);
