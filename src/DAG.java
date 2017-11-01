@@ -75,6 +75,10 @@ public class DAG {
 				added = nodes.add(node1);
 			}
 			setLink(ch1,ch2);
+			if(circuit())
+			{
+				removeLink(ch1,ch2);
+			}
 		}
 		System.out.println("Characters cannot be the same.");
 	}
@@ -204,6 +208,15 @@ public class DAG {
 			}
 		}
 		return false;
-		
+	}
+	
+	private void removeLink(char ch1, char ch2){
+		Node node1 = returnNode(ch1);
+		Node node2 = returnNode(ch2);
+		if(node1.links.contains(node2))
+		{
+			node1.links.remove(node2);
+			System.out.println("Removed");
+		}
 	}
 }

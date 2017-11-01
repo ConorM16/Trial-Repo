@@ -52,12 +52,6 @@ public class DAGTest {
 		assertTrue("B is linked to C",dag.linked('B','C'));
 		assertFalse("A is not linked to D",dag.linked('A','D'));
 		assertTrue("A is linked to C",dag.linked('A','C'));
-		
-		//Testing for loop
-		assertFalse("A is not linked to A",dag.linked('A', 'A'));
-		
-		dag.requestLink('C','A');
-		assertTrue("A is noq linked to A",dag.linked('A', 'A'));
 	}
 	
 	@Test
@@ -68,7 +62,7 @@ public class DAGTest {
 		dag.requestLink('B','A');
 		dag.requestLink('A','D');
 		
-		assertTrue("Circuit present.",dag.circuit());
+		assertFalse("Circuits never present",dag.circuit());
 	}
 
 }
