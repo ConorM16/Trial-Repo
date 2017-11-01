@@ -51,13 +51,24 @@ public class DAGTest {
 		assertFalse("B is not linked to a",dag.linked('B','A'));
 		assertTrue("B is linked to C",dag.linked('B','C'));
 		assertFalse("A is not linked to D",dag.linked('A','D'));
+		assertTrue("A is linked to C",dag.linked('A','C'));
+		
+		//Testing for loop
+		assertFalse("A is not linked to A",dag.linked('A', 'A'));
+		
+		dag.requestLink('C','A');
+		assertTrue("A is noq linked to A",dag.linked('A', 'A'));
 	}
 	
-//	@Test
-//	public void testArrLists(){
-//		DAG dag = new DAG();
-//		dag.addNode('A');
-//		assertTrue("Node is present", dag.containsNode('A'));
-//	}
+	@Test
+	public void testCircuit(){
+		DAG dag = new DAG();
+		dag.requestLink('A','B');
+		dag.requestLink('A','C');
+		dag.requestLink('B','A');
+		dag.requestLink('A','D');
+		
+		assertTrue("Circuit present.",dag.circuit());
+	}
 
 }

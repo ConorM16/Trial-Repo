@@ -150,6 +150,7 @@ public class DAG {
 				System.out.println("Nodes linked");
 				return true;
 			}
+			return linked(testNode.N,ch2);
 		}
 		return false;
 	}
@@ -162,7 +163,6 @@ public class DAG {
 	private boolean equal(Node n, char ch){
 		String strNode = Character.toString(n.N);
 		String strCh = Character.toString(ch);
-		System.out.println("N char: " + strNode + " Char: " + strCh);
 		return strNode.equals(strCh);
 	}
 	
@@ -189,7 +189,21 @@ public class DAG {
 		System.out.println(listNodes[size-1].N);
 	}
 	
-//	public boolean circuit(){
-//		
-//	}
+	/**
+	 * 
+	 * @return if circuit present
+	 */
+	public boolean circuit(){
+		Node [] array = toArray(nodes);
+		int i;
+		for(i = 0; i < array.length; i++)
+		{
+			if(linked(array[i].N,array[i].N))
+			{
+				return true;
+			}
+		}
+		return false;
+		
+	}
 }
