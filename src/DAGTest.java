@@ -29,10 +29,18 @@ public class DAGTest {
 	}
 	
 	@Test
-	public void testArrLists(){
+	public void testEqual(){
 		DAG dag = new DAG();
 		dag.addNode('A');
-		assertTrue("Node is present", dag.containsNode('A'));
+		assertTrue("Two characters are the same.",dag.checkEqual('A','A'));
+		assertFalse("Two characters are not the same.",dag.checkEqual('B','A'));
 	}
+	
+//	@Test
+//	public void testArrLists(){
+//		DAG dag = new DAG();
+//		dag.addNode('A');
+//		assertTrue("Node is present", dag.containsNode('A'));
+//	}
 
 }

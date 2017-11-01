@@ -4,15 +4,11 @@ public class DAG {
 	public ArrayList<Node> nodes = new ArrayList<Node>();
 	
 	private class Node {
-        //private Node left,right,parent;  // left and right subtrees
         private char N;             // character value of node
         public ArrayList<Node> links = new ArrayList<Node>();
 
         public Node(char N) {
             this.N = N;
-            //left = null;
-            //right = null;
-            //parent = null;
         }
     }
 	
@@ -24,13 +20,9 @@ public class DAG {
 	public boolean containsNode(char ch){
 		Node array[] = toArray();
 		int i = 0;
-		String strNode;
-		String strCh = Character.toString(ch);
-		//boolean same = false;
 		while(i < array.length)
 		{
-			strNode = Character.toString(array[i].N);
-			if(strNode.equals(strCh))
+			if(equal(array[i], ch))
 			{
 				return true;
 			}
@@ -85,12 +77,35 @@ public class DAG {
 	
 	/**
 	 * 
-	 * @param ch - char of present Node we want
+	 * @param ch - char of present Node we want, node is always present
 	 * @return requested Node
 	 */
 	private Node returnNode(char ch){
-		
+		Node array[] = toArray();
+		for(int i = 0; i < array.length; i++)
+		{
+			
+		}
 	}
+	
+	public boolean checkEqual(char ch1, char ch2){
+		char upper1 = Character.toUpperCase(ch1);
+		char upper2 = Character.toUpperCase(ch2);
+		Node node = new Node(ch1);
+		return equal(node,ch2);
+	}
+	/**
+	 * 
+	 * @param n - node we want to compare ch to
+	 * @param ch
+	 * @return if n.N = ch
+	 */
+	private boolean equal(Node n, char ch){
+		String strNode = Character.toString(n.N);
+		String strCh = Character.toString(ch);
+		return strNode.equals(strCh);
+	}
+	
 	private void setLink(int i, int j){
 		Node node1 = nodes.get(i);
 		Node node2 = nodes.get(j);
@@ -105,6 +120,7 @@ public class DAG {
 		listNodes = nodes.toArray(listNodes);
 		return listNodes;
 	}
+	
 	/**
 	 * Prints all nodes
 	 */
