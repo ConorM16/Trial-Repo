@@ -5,9 +5,18 @@ import org.junit.Test;
 public class DAGTest {
 
 	@Test
+	public void testContains(){
+		DAG dag = new DAG();
+		dag.addNode('A');
+		assertTrue("Node is present",dag.containsNode('A'));
+		assertFalse("Node is present",dag.containsNode('Z'));
+	}
+	
+	@Test
 	public void testAdd() {
 		DAG dag = new DAG();
-		assertTrue("Node is present", dag.addNode('A'));
+		assertTrue("Node is not present", dag.addNode('A'));
+		assertFalse("Node is already present", dag.addNode('A'));
 	}
 	
 	@Test 
@@ -17,6 +26,13 @@ public class DAGTest {
 		dag.addNode('B');
 		dag.addNode('C');
 		dag.printNodes();
+	}
+	
+	@Test
+	public void testArrLists(){
+		DAG dag = new DAG();
+		dag.addNode('A');
+		assertTrue("Node is present", dag.containsNode('A'));
 	}
 
 }

@@ -18,15 +18,38 @@ public class DAG {
 	
 	/**
 	 * 
+	 * @param ch = char val we check for
+	 * @return true if character present, false otherwise
+	 */
+	public boolean containsNode(char ch){
+		Node array[] = toArray();
+		int i = 0;
+		String strNode;
+		String strCh = Character.toString(ch);
+		//boolean same = false;
+		while(i < array.length)
+		{
+			strNode = Character.toString(array[i].N);
+			if(strNode.equals(strCh))
+			{
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
+	/**
+	 * 
 	 * @param N char value of Node to be added
 	 * @return true if Node is added, false otherwise
 	 */
 	public boolean addNode(char N){
 		char capital = Character.toUpperCase(N); //converts N to uppercase letter
-		Node newNode = new Node(capital);
+/*		Node newNode = new Node(capital);*/
 		boolean added = false;
-		if(!nodes.contains(newNode))
+		if(!containsNode(capital))
 		{
+			Node newNode = new Node(capital);
 			while(added == false)
 			{
 				added = nodes.add(newNode);				
@@ -40,9 +63,41 @@ public class DAG {
 		}
 	}
 	
-	public void printNodes(){
+	public void requestLink(char ch1, char ch2){
+		Node node1 = new Node(ch1);
+		Node node2 = new Node(ch2);
+		boolean added = false;
+		if(!containsNode(ch1))
+		{
+			added = nodes.add(node1);
+		}
+		if(!containsNode(ch2))
+		{
+			added = nodes.add(node2);
+		}
+		setLink(nodes.indexOf(node1),nodes.indexOf(node2));
+	}
+	
+	
+	private void setLink(int i, int j){
+		Node node1 = nodes.get(i);
+		Node node2 = nodes.get(j);
+	}
+	
+	/**
+	 * 
+	 * @return DAG array list as array of nodes
+	 */
+	private Node[] toArray(){
 		Node listNodes[] = new Node[nodes.size()];
 		listNodes = nodes.toArray(listNodes);
+		return listNodes;
+	}
+	/**
+	 * Prints all nodes
+	 */
+	public void printNodes(){
+		Node listNodes[] = toArray();
 		int size = listNodes.length;
 		for(int i = 0; i < size-1; i++)
 		{
