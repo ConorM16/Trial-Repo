@@ -31,46 +31,51 @@ public class SocGraph /*HTTP Connection*/{
 		Scanner input = new Scanner(System.in);
 		String username = "";
 		int end = 0;
-		System.out.println("Please provide your github username: ");
 		while(end != 1)
 		{
+			System.out.println("Please provide your github username: ");
 			username = input.next();
-			if(username.equals("quit"));
-			end = 1;
-			//String url = "http://www.google.com/search?q=mkyong";
-			String url = "https://api.github.com/users/" + username;// + "/repos";
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	
-			// optional default is GET
-			con.setRequestMethod("GET");
-	
-			//add request header
-			con.setRequestProperty("User-Agent", USER_AGENT);
-	
-			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + url);
-			System.out.println("Response Code : " + responseCode);
-	
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
-			//String response = "";
-			while ((inputLine = in.readLine()) != null) {
-				response = response.append(inputLine);
-				//System.out.println("\n");
-			}
-			in.close();
-			String splIn = response.toString();
-			String[] splitInput = splIn.split(",");
-			//print result
-			for(int i = 0; i < splitInput.length; i++)
+			if(username.equals("quit"))
 			{
-				System.out.println(splitInput[i]);
+				end = 1;
 			}
-			//countRepos(splitInput);
-			publicRepos(splitInput, username);
+			else
+			{
+				//String url = "http://www.google.com/search?q=mkyong";
+				String url = "https://api.github.com/users/" + username;// + "/repos";
+				URL obj = new URL(url);
+				HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		
+				// optional default is GET
+				con.setRequestMethod("GET");
+		
+				//add request header
+				con.setRequestProperty("User-Agent", USER_AGENT);
+		
+				int responseCode = con.getResponseCode();
+				System.out.println("\nSending 'GET' request to URL : " + url);
+				System.out.println("Response Code : " + responseCode);
+		
+				BufferedReader in = new BufferedReader(
+				        new InputStreamReader(con.getInputStream()));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+				//String response = "";
+				while ((inputLine = in.readLine()) != null) {
+					response = response.append(inputLine);
+					//System.out.println("\n");
+				}
+				in.close();
+				String splIn = response.toString();
+				String[] splitInput = splIn.split(",");
+				//print result
+				for(int i = 0; i < splitInput.length; i++)
+				{
+					System.out.println(splitInput[i]);
+				}
+				//countRepos(splitInput);
+				publicRepos(splitInput, username);
+			}
 		}
 	}
 	
