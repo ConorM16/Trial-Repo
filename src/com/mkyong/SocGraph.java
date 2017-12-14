@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -17,7 +19,7 @@ public class SocGraph /*HTTP Connection*/{
 
 		SocGraph http = new SocGraph();
 
-		System.out.println("Testing 1 - Send Http GET request");
+		System.out.println("Testing 1 - Send Http GET request for all Github Users");
 		//http.sendGetUser();
 		http.sendGetDefault();
 
@@ -25,63 +27,9 @@ public class SocGraph /*HTTP Connection*/{
 		//http.sendPost();
 
 	}
-
-	// HTTP GET request - user provides github accounts
-	private void sendGetUser() throws Exception {
-
-		Scanner input = new Scanner(System.in);
-		String username = "";
-		int end = 0;
-		while(end != 1)
-		{
-			System.out.println("Please provide your github username: ");
-			username = input.next();
-			if(username.equals("quit"))
-			{
-				end = 1;
-			}
-			else
-			{
-				//String url = "https://api.github.com/users";
-				String url = "https://api.github.com/users/" + username;// + "/repos";
-				URL obj = new URL(url);
-				HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		
-				// optional default is GET
-				con.setRequestMethod("GET");
-		
-				//add request header
-				con.setRequestProperty("User-Agent", USER_AGENT);
-		
-				int responseCode = con.getResponseCode();
-				System.out.println("\nSending 'GET' request to URL : " + url);
-				System.out.println("Response Code : " + responseCode);
-		
-				BufferedReader in = new BufferedReader(
-				        new InputStreamReader(con.getInputStream()));
-				String inputLine;
-				StringBuffer response = new StringBuffer();
-				//String response = "";
-				while ((inputLine = in.readLine()) != null) {
-					response = response.append(inputLine);
-					//System.out.println("\n");
-				}
-				in.close();
-				String splIn = response.toString();
-				String[] splitInput = splIn.split(",");
-				//print result
-				for(int i = 0; i < splitInput.length; i++)
-				{
-					System.out.println(splitInput[i]);
-				}
-				//countRepos(splitInput);
-				publicRepos(splitInput, username);
-			}
-		}
-	}
 	
-	// HTTP GET request - user provides github accounts
-		private void sendGetDefault() throws Exception {
+	// HTTP GET request - default github accounts
+	private void sendGetDefault() throws Exception {
 
 			String url = "https://api.github.com/users";
 			URL obj = new URL(url);
@@ -114,8 +62,47 @@ public class SocGraph /*HTTP Connection*/{
 			{
 				System.out.println(splitInput[i]);
 			}
+			String [] usernames = findUsernames(splitInput);
 			//countRepos(splitInput);
 			//publicRepos(splitInput, "Overall");
+		}
+		
+		// HTTP GET request - default github accounts
+	private void sendGetSpecified(String username) throws Exception {
+
+			String url = "https://api.github.com/users" + username;
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	
+			// optional default is GET
+			con.setRequestMethod("GET");
+	
+			//add request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+	
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+	
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			//String response = "";
+			while ((inputLine = in.readLine()) != null) {
+				response = response.append(inputLine);
+				//System.out.println("\n");
+			}
+			in.close();
+			String splIn = response.toString();
+			String[] splitInput = splIn.split(",");
+			//print result
+			for(int i = 0; i < splitInput.length; i++)
+			{
+				System.out.println(splitInput[i]);
+			}
+			//countRepos(splitInput);
+			publicRepos(splitInput, "Overall");
 		}
 		
 	private int publicRepos(String [] input, String username){
@@ -139,22 +126,48 @@ public class SocGraph /*HTTP Connection*/{
 	 * @param input = array of input from GET command
 	 * @return amount of repos for user
 	 */
-	private int countRepos(String [] input){
-		int repos = 0;
+//	private int countRepos(String [] input){
+//		int repos = 0;
+//		int i;
+//		String repoSym = "full_name";
+//		removeChar(input, ":");
+//		for(i = 0; i < input.length; i++)
+//		{
+//			if(input[i].contains(repoSym))
+//			{
+//				repos++;
+//			}
+//		}
+//		System.out.println("Amount of public repos: " + repos );
+//		return repos;
+//	}
+	
+	private String [] findUsernames(String [] input){
+		ArrayList<String> names = new ArrayList<String>();
+		String lookup = "login";
+		String [] splitArr;
 		int i;
-		String repoSym = "full_name";
-		removeChar(input, ":");
 		for(i = 0; i < input.length; i++)
 		{
-			if(input[i].contains(repoSym))
+			if(input[i].contains(lookup))
 			{
-				repos++;
+				splitArr = input[i].split(":");
+				names.add(splitArr[splitArr.length-1]);
 			}
 		}
-		System.out.println("Amount of public repos: " + repos );
-		return repos;
+		Object [] objList = names.toArray();
+		String [] usernames = Arrays.copyOf(objList,  objList.length, String[].class);
+		printArray(usernames);
+		return usernames;
 	}
 	
+	//prints out array
+	private void printArray(String [] array){
+		for(int i = 0; i < array.length; i++)
+		{
+			System.out.println(array[i]);
+		}
+	}
 	private void removeChar(String [] input, CharSequence remove){
 		for(int i = 0; i < input.length; i++)
 		{
