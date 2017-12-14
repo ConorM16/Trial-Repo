@@ -22,6 +22,7 @@ public class SocGraph /*HTTP Connection*/{
 		System.out.println("Testing 1 - Send Http GET request for all Github Users");
 		//http.sendGetUser();
 		http.sendGetDefault();
+		//http.sendGetSpecified("ConorM16");
 
 		//System.out.println("\nTesting 2 - Send Http POST request");
 		//http.sendPost();
@@ -39,7 +40,8 @@ public class SocGraph /*HTTP Connection*/{
 			con.setRequestMethod("GET");
 	
 			//add request header
-			con.setRequestProperty("User-Agent", USER_AGENT);
+			//con.setRequestProperty("User-Agent", USER_AGENT);
+			con.addRequestProperty("User-Agent", "Mozilla/4.76");
 	
 			int responseCode = con.getResponseCode();
 			System.out.println("\nSending 'GET' request to URL : " + url);
@@ -58,19 +60,23 @@ public class SocGraph /*HTTP Connection*/{
 			String splIn = response.toString();
 			String[] splitInput = splIn.split(",");
 			//print result
-			for(int i = 0; i < splitInput.length; i++)
-			{
-				System.out.println(splitInput[i]);
-			}
+//			for(int i = 0; i < splitInput.length; i++)
+//			{
+//				System.out.println(splitInput[i]);
+//			}
 			String [] usernames = findUsernames(splitInput);
-			//countRepos(splitInput);
-			//publicRepos(splitInput, "Overall");
+			printRepos(usernames);
 		}
-		
-		// HTTP GET request - default github accounts
+	
+	/**
+	 * 	
+	 * @param username - github account we want to access
+	 * @param info - piece of info we want to extract from account
+	 * @throws Exception
+	 */
 	private void sendGetSpecified(String username) throws Exception {
 
-			String url = "https://api.github.com/users" + username;
+			String url = "https://api.github.com/users/" + username;
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	
@@ -78,7 +84,8 @@ public class SocGraph /*HTTP Connection*/{
 			con.setRequestMethod("GET");
 	
 			//add request header
-			con.setRequestProperty("User-Agent", USER_AGENT);
+			//con.addRequestProperty("User-Agent", USER_AGENT);
+			con.addRequestProperty("User-Agent", "Mozilla/4.76");
 	
 			int responseCode = con.getResponseCode();
 			System.out.println("\nSending 'GET' request to URL : " + url);
@@ -101,8 +108,7 @@ public class SocGraph /*HTTP Connection*/{
 			{
 				System.out.println(splitInput[i]);
 			}
-			//countRepos(splitInput);
-			publicRepos(splitInput, "Overall");
+			publicRepos(splitInput, username);
 		}
 		
 	private int publicRepos(String [] input, String username){
@@ -121,38 +127,20 @@ public class SocGraph /*HTTP Connection*/{
 		pubRepos = Integer.parseInt(splitRepos[splitRepos.length-1]);
 		return pubRepos;
 	}
-	/**
-	 * 
-	 * @param input = array of input from GET command
-	 * @return amount of repos for user
-	 */
-//	private int countRepos(String [] input){
-//		int repos = 0;
-//		int i;
-//		String repoSym = "full_name";
-//		removeChar(input, ":");
-//		for(i = 0; i < input.length; i++)
-//		{
-//			if(input[i].contains(repoSym))
-//			{
-//				repos++;
-//			}
-//		}
-//		System.out.println("Amount of public repos: " + repos );
-//		return repos;
-//	}
 	
 	private String [] findUsernames(String [] input){
 		ArrayList<String> names = new ArrayList<String>();
 		String lookup = "login";
 		String [] splitArr;
+		String noQuotes = "";					//username without the quotation marks, "mark" -> mark
 		int i;
 		for(i = 0; i < input.length; i++)
 		{
 			if(input[i].contains(lookup))
 			{
 				splitArr = input[i].split(":");
-				names.add(splitArr[splitArr.length-1]);
+				noQuotes = splitArr[splitArr.length - 1].replace("\"", "");
+				names.add(noQuotes);
 			}
 		}
 		Object [] objList = names.toArray();
@@ -161,19 +149,28 @@ public class SocGraph /*HTTP Connection*/{
 		return usernames;
 	}
 	
-	//prints out array
+	// prints out array
 	private void printArray(String [] array){
 		for(int i = 0; i < array.length; i++)
 		{
 			System.out.println(array[i]);
 		}
 	}
-	private void removeChar(String [] input, CharSequence remove){
-		for(int i = 0; i < input.length; i++)
+	
+	private void printRepos(String [] users) throws Exception {
+		SocGraph http = new SocGraph();
+		int i;
+		for(i = 0; i< users.length; i++)
 		{
-			input[i] = input[i].replace(remove,"");
+			http.sendGetSpecified(users[i]);
 		}
 	}
+//	private void removeChar(String [] input, CharSequence remove){
+//		for(int i = 0; i < input.length; i++)
+//		{
+//			input[i] = input[i].replace(remove,"");
+//		}
+//	}
 
 	// HTTP POST request
 	private void sendPost() throws Exception {
