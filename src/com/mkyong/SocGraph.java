@@ -18,15 +18,16 @@ public class SocGraph /*HTTP Connection*/{
 		SocGraph http = new SocGraph();
 
 		System.out.println("Testing 1 - Send Http GET request");
-		http.sendGet();
+		//http.sendGetUser();
+		http.sendGetDefault();
 
 		//System.out.println("\nTesting 2 - Send Http POST request");
 		//http.sendPost();
 
 	}
 
-	// HTTP GET request
-	private void sendGet() throws Exception {
+	// HTTP GET request - user provides github accounts
+	private void sendGetUser() throws Exception {
 
 		Scanner input = new Scanner(System.in);
 		String username = "";
@@ -41,7 +42,7 @@ public class SocGraph /*HTTP Connection*/{
 			}
 			else
 			{
-				//String url = "http://www.google.com/search?q=mkyong";
+				//String url = "https://api.github.com/users";
 				String url = "https://api.github.com/users/" + username;// + "/repos";
 				URL obj = new URL(url);
 				HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -79,6 +80,44 @@ public class SocGraph /*HTTP Connection*/{
 		}
 	}
 	
+	// HTTP GET request - user provides github accounts
+		private void sendGetDefault() throws Exception {
+
+			String url = "https://api.github.com/users";
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	
+			// optional default is GET
+			con.setRequestMethod("GET");
+	
+			//add request header
+			con.setRequestProperty("User-Agent", USER_AGENT);
+	
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+	
+			BufferedReader in = new BufferedReader(
+			        new InputStreamReader(con.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			//String response = "";
+			while ((inputLine = in.readLine()) != null) {
+				response = response.append(inputLine);
+				//System.out.println("\n");
+			}
+			in.close();
+			String splIn = response.toString();
+			String[] splitInput = splIn.split(",");
+			//print result
+			for(int i = 0; i < splitInput.length; i++)
+			{
+				System.out.println(splitInput[i]);
+			}
+			//countRepos(splitInput);
+			//publicRepos(splitInput, "Overall");
+		}
+		
 	private int publicRepos(String [] input, String username){
 		int i = 0;
 		int pubRepos;
