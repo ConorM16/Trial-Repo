@@ -14,7 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class SocGraph /*HTTP Connection*/{
 
 	private final String USER_AGENT = "Mozilla/5.0";
-
+	private int publics = 0;
 	public static void main(String[] args) throws Exception {
 
 		SocGraph http = new SocGraph();
@@ -42,7 +42,7 @@ public class SocGraph /*HTTP Connection*/{
 
 		//add request header
 		//con.setRequestProperty("User-Agent", USER_AGENT);
-		con.addRequestProperty("User-Agent", "Mozilla/4.76");
+		con.addRequestProperty("User-Agent", USER_AGENT);
 
 		int responseCode = con.getResponseCode();
 		System.out.println("\nSending 'GET' request to URL : " + url);
@@ -77,7 +77,7 @@ public class SocGraph /*HTTP Connection*/{
 
 		//add request header
 		//con.setRequestProperty("User-Agent", USER_AGENT);
-		con.addRequestProperty("User-Agent", "Mozilla/4.76");
+		con.addRequestProperty("User-Agent", /*"Mozilla/4.76"*/USER_AGENT);
 
 		int responseCode = con.getResponseCode();
 		System.out.println("\nSending 'GET' request to URL : " + url);
@@ -112,7 +112,7 @@ public class SocGraph /*HTTP Connection*/{
 	
 		//add request header
 		// con.setRequestProperty("User-Agent", USER_AGENT);
-		con.addRequestProperty("User-Agent", "Mozilla/4.76");
+		con.addRequestProperty("User-Agent", USER_AGENT);
 
 		int responseCode = con.getResponseCode();
 		System.out.println("\nSending 'GET' request to URL : " + url);
@@ -155,7 +155,7 @@ public class SocGraph /*HTTP Connection*/{
 	
 			//add request header
 			//con.addRequestProperty("User-Agent", USER_AGENT);
-			con.addRequestProperty("User-Agent", "Mozilla/4.76");
+			con.addRequestProperty("User-Agent", USER_AGENT);
 	
 			int responseCode = con.getResponseCode();
 			System.out.println("\nSending 'GET' request to URL : " + url);
@@ -181,7 +181,7 @@ public class SocGraph /*HTTP Connection*/{
 			publicRepos(splitInput, username);
 		}
 		
-	private int publicRepos(String [] input, String username){
+	private void publicRepos(String [] input, String username){
 		int i = 0;
 		int pubRepos;
 		String repos = "public_repos";
@@ -195,7 +195,7 @@ public class SocGraph /*HTTP Connection*/{
 		String[] splitRepos = input[i].split(":");
 		System.out.println("\n" + username + "'s public repos: " + splitRepos[splitRepos.length-1]);
 		pubRepos = Integer.parseInt(splitRepos[splitRepos.length-1]);
-		return pubRepos;
+		publics = publics + pubRepos;
 	}
 	
 	private String [] findUsernames(String [] input){
