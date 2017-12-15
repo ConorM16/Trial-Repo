@@ -14,7 +14,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class SocGraph /*HTTP Connection*/{
 
 	private final String USER_AGENT = "Mozilla/5.0";
-	private int publics = 0;
+	private int publics = 0;		//amount of public repositories calculated
 	public static void main(String[] args) throws Exception {
 
 		SocGraph http = new SocGraph();
