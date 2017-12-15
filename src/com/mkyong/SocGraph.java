@@ -33,7 +33,7 @@ public class SocGraph /*HTTP Connection*/{
 	
 	//authenticate me
 	private void authenticate() throws Exception{
-		String url = "https://api.github.com/users/?access_token=26fb5fb67db15c01e97c3f8da21414b3c65d61a2"; 
+		String url = "https://api.github.com/users/?access_token="; 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
