@@ -75,45 +75,45 @@ public class SocGraph /*HTTP Connection*/{
 //		builder.append("2");
 	}
 	
-	// getting query rate
-	private void queryRate() throws Exception {
-		String url = "https://api.github.com/rate_limit?access_token= "; 
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		//add request header
-		//con.setRequestProperty("User-Agent", USER_AGENT);
-		con.addRequestProperty("User-Agent", /*"Mozilla/4.76"*/USER_AGENT);
-
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		//String response = "";
-		while ((inputLine = in.readLine()) != null) {
-			response = response.append(inputLine);
-			//System.out.println("\n");
-		}
-		in.close();
-		String splIn = response.toString();
-		String[] splitInput = splIn.split(",");
-		for(int i = 0; i < splitInput.length; i++)
-		{
-			System.out.println(splitInput[i]);
-		}
-	}
+//	// getting query rate
+//	private void queryRate() throws Exception {
+//		String url = "https://api.github.com/rate_limit?access_token= "; 
+//		URL obj = new URL(url);
+//		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+//
+//		// optional default is GET
+//		con.setRequestMethod("GET");
+//
+//		//add request header
+//		//con.setRequestProperty("User-Agent", USER_AGENT);
+//		con.addRequestProperty("User-Agent", /*"Mozilla/4.76"*/USER_AGENT);
+//
+//		int responseCode = con.getResponseCode();
+//		System.out.println("\nSending 'GET' request to URL : " + url);
+//		System.out.println("Response Code : " + responseCode);
+//
+//		BufferedReader in = new BufferedReader(
+//		        new InputStreamReader(con.getInputStream()));
+//		String inputLine;
+//		StringBuffer response = new StringBuffer();
+//		//String response = "";
+//		while ((inputLine = in.readLine()) != null) {
+//			response = response.append(inputLine);
+//			//System.out.println("\n");
+//		}
+//		in.close();
+//		String splIn = response.toString();
+//		String[] splitInput = splIn.split(",");
+//		for(int i = 0; i < splitInput.length; i++)
+//		{
+//			System.out.println(splitInput[i]);
+//		}
+//	}
 	
 	// HTTP GET request - default github accounts
 	private void sendGetDefault(StringBuilder builder) throws Exception {
 
-		String url = "https://api.github.com/users?access_token=7af0bb592a832b5ca10e390576a069b6dd03394c";
+		String url = "https://api.github.com/users?access_token=";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
@@ -155,7 +155,7 @@ public class SocGraph /*HTTP Connection*/{
 	 */
 	private void sendGetSpecified(StringBuilder builder,String username) throws Exception {
 
-			String url = "https://api.github.com/users/" + username + "?access_token=7af0bb592a832b5ca10e390576a069b6dd03394c";
+			String url = "https://api.github.com/users/" + username + "?access_token=";
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	
