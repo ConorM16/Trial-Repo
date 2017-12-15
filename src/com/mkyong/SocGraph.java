@@ -21,10 +21,10 @@ public class SocGraph /*HTTP Connection*/{
 
 		System.out.println("Testing 1 - Send Http GET request for all Github Users");
 		//http.sendGetUser();
-		http.sendGetDefault();
+		//http.sendGetDefault();
 		//http.sendGetSpecified("ConorM16");
 		//http.queryRate();
-		//http.authenticate();
+		http.authenticate();
 		//http.queryRate();
 		//System.out.println("\nTesting 2 - Send Http POST request");
 		//http.sendPost();
@@ -33,7 +33,7 @@ public class SocGraph /*HTTP Connection*/{
 	
 	//authenticate me
 	private void authenticate() throws Exception{
-		String url = "https://api.github.com/ConorM16"; 
+		String url = "https://api.github.com/users/?access_token=26fb5fb67db15c01e97c3f8da21414b3c65d61a2"; 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
@@ -42,7 +42,7 @@ public class SocGraph /*HTTP Connection*/{
 
 		//add request header
 		//con.setRequestProperty("User-Agent", USER_AGENT);
-		con.addRequestProperty("User-Agent", USER_AGENT);
+		con.addRequestProperty("User-Agent", USER_AGENT);	//USER_AGENT = "Mozilla/5.0";
 
 		int responseCode = con.getResponseCode();
 		System.out.println("\nSending 'GET' request to URL : " + url);
@@ -68,7 +68,7 @@ public class SocGraph /*HTTP Connection*/{
 	}
 	// getting query rate
 	private void queryRate() throws Exception {
-		String url = "https://api.github.com/ConorM16/rate_limit"; 
+		String url = "https://api.github.com/rate_limit"; 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
