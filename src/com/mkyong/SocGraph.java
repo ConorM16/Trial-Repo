@@ -51,7 +51,7 @@ public class SocGraph /*HTTP Connection*/{
 	// HTTP GET request - default github accounts
 	private void sendGetDefault(StringBuilder builder) throws Exception {
 
-		String url = "https://api.github.com/users?access_token=710e21c7cf75ed7437fc12a0df38c8ae00a2d2cc";
+		String url = "https://api.github.com/users?access_token=";
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		// optional default is GET
@@ -87,7 +87,7 @@ public class SocGraph /*HTTP Connection*/{
 	 */
 	private void sendGetSpecified(StringBuilder builder,String username) throws Exception {
 
-			String url = "https://api.github.com/users/" + username + "?access_token=710e21c7cf75ed7437fc12a0df38c8ae00a2d2cc";
+			String url = "https://api.github.com/users/" + username + "?access_token=";
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 	
